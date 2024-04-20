@@ -28,7 +28,8 @@ protected:
 public:
 
     //sa fac aici try except: 1)minim 4 jucatori;2)trebuie ca nrmax==nrjuc si sa fac cu catch
-    void StartTurneu();
+    //void StartTurneu();
+    virtual void StartTurneu();
     explicit Turneu(std::string nume = "No Name", int nrMaximJucatori = 8);
     virtual ~Turneu()=default;
     std::vector<Runda>& get_listarunde();
@@ -39,6 +40,7 @@ public:
     void afiseaza_lista_jucatori();
     void ordoneaza_dupa_puncte();
     void ordoneaza_dupa_rating();
+    void set_nume();
     [[nodiscard]] std::string get_nume() const;
     virtual void set_nrrunde();
     [[nodiscard]] int get_nrrunde()const;

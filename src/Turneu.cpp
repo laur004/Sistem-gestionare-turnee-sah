@@ -5,8 +5,9 @@
 #include "Turneu.h"
 #include <algorithm>
 
+//void Turneu::StartTurneu(){}
 void Turneu::StartTurneu(){
-    set_nrrunde();
+    //set_nrrunde();
     for (const Jucator& jucator : listajucatori) {
 
         Jucator jucatorCopie(jucator.get_nume(), jucator.get_prenume(), jucator.get_rating(),jucator.get_puncte());
@@ -105,7 +106,7 @@ void Turneu::ordoneaza_dupa_rating(){
     });
 }
 
-
+//void Turneu::set_nume(){std::cin>>nume;}
 [[nodiscard]] std::string Turneu::get_nume() const{return nume;}
 void Turneu::set_nrrunde(){ nrRunde=nrMaximJucatori%2?nrMaximJucatori : nrMaximJucatori-1;}
 int Turneu::get_nrrunde() const{return nrRunde;}

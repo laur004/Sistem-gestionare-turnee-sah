@@ -4,6 +4,7 @@
 #include "ListaTurnee.h"
 
 
+
 std::vector<Turneu>& ListaTurnee::get_lista(){
     return listaturnee;
 }
@@ -40,6 +41,8 @@ void ListaTurnee::adaugare_turneu() {
 
 
 }
+
+
 
 void ListaTurnee::eliminare_turneu() {
     if (listaturnee.empty()) {

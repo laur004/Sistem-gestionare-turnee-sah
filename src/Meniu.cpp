@@ -1,43 +1,56 @@
 #include <iostream>
+#include <limits>
 #include "Utilizator.h"
 #include "ListaTurnee.h"
 #include "Meniu.h"
 
 void Meniu::Login(ListaTurnee &listaTurnee) {
     std::cout << "Bine ai venit!\nVrei sa continui ca 1) 'Guest' sau 2) 'Administrator'?\n\nVrei sa iesi? Tasteaza 0\nTasteaza alegerea: ";
+
     int optiune;
-    std::cin >> optiune;
-    switch (optiune) {
-        case 2: {
-            std::cout << "Parola: ";
-            std::string parola;
-            std::cin >> parola;
-            if (parola == "parola") {
+    try {
+        if (!(std::cin >> optiune)) {
+            throw std::runtime_error("Trebuie sa alegi ca optiune numere nu litere!"); // Throw an exception if input extraction fails
+        }
 
-                std::cout << "Bine ai venit, admin!\n";
-                Administrator admin;
-                aMeniu(&admin,listaTurnee); // Apelăm MeniuAdmin() cu obiectul de tip Administrator
-            } else {
-                std::cout << "Parola incorecta!\n";
-                Login( listaTurnee);
+        if (optiune != 0 && optiune != 1 && optiune != 2) {
+            throw std::runtime_error("Nu exista optiunea!"); // Throw an exception for invalid input
+        }
+
+        switch (optiune) {
+            case 2: {
+                std::cout << "Parola: ";
+                std::string parola;
+                std::cin >> parola;
+                if (parola == "parola") {
+                    std::cout << "Bine ai venit, admin!\n";
+                    Administrator admin;
+                    aMeniu(&admin, listaTurnee);
+                } else {
+                    std::cout << "Parola incorecta!\n";
+                    Login(listaTurnee);
+                }
+                break;
             }
-            break;
-        }
 
-        case 1: {
-            Guest guest; // Creăm un obiect de tip Guest
-            std::cout << "Bine ai venit, guest!\n";
-            aMeniu(&guest,listaTurnee); // Apelăm Meniu() cu obiectul de tip Guest
-            break;
-        }
+            case 1: {
+                Guest guest;
+                std::cout << "Bine ai venit, guest!\n";
+                aMeniu(&guest, listaTurnee);
+                break;
+            }
 
-        case 0:break;
+            case 0: break;
 
-        default: {
-            std::cout << "Nu exista optiunea!\n";
-            Login(listaTurnee);
-            break;
+            default: {
+                throw std::runtime_error("Nu exista optiunea!"); // Throw an exception for invalid input
+            }
         }
+    } catch (const std::exception &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        std::cin.clear(); // Clear the error state
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard the invalid input
+        Login(listaTurnee); // Return to the login menu
     }
 }
 
@@ -61,7 +74,7 @@ void Meniu::aMeniu(Utilizator* utilizator,ListaTurnee& listaTurnee){
             case 0:{
                 Login(listaTurnee);
                 break;}
-            case 1: {Administrator::creareTurneu(listaTurnee);
+            case 1: {dynamic_cast<Administrator*>(utilizator)->creareTurneu(listaTurnee);
                 aMeniu(utilizator,listaTurnee);
                 break;}
 
@@ -189,6 +202,22 @@ void Meniu::MeniuTurneu(Utilizator* utilizator,ListaTurnee& listaTurnee, unsigne
                         else{ listaTurnee.get_lista()[i].StartTurneu();}
                     MeniuTurneu(utilizator, listaTurnee, i);
                     break;
+//                    if(listaTurnee.get_lista()[i].get_NrMaximJucatori()!=listaTurnee.get_lista()[i].get_NrJucatori())
+//                        std::cout<<"Nu se poate incepe turneul! Nu s-a intrunit numarul de jucatori!\n";
+//                    else{ Turneu* turneu_ptr = &listaTurnee.get_lista()[i];
+//                        auto* turneu_rapid_ptr = dynamic_cast<TurneuRapid*>(turneu_ptr);
+//                        if (turneu_rapid_ptr) {
+//                            turneu_rapid_ptr->StartTurneu();
+//                        }
+//                        else{
+//                            auto* turneu_clasic_ptr = dynamic_cast<TurneuClasic*>(turneu_ptr);
+//                            if (turneu_clasic_ptr) {
+//                                turneu_clasic_ptr->StartTurneu();
+//                            }
+//                        }
+//                    }
+//                    MeniuTurneu(utilizator, listaTurnee, i);
+//                    break;
                 }
                 default: {
                     std::cout << "Nu exista optiunea!";
@@ -287,6 +316,8 @@ void Meniu::MeniuTurneu(Utilizator* utilizator,ListaTurnee& listaTurnee, unsigne
             for(int aux=0; aux<listaTurnee.get_lista()[i].get_nrrunde();aux++)
                 std::cout<< "R"<<aux+1<<" ";
             std::cout<<"\n";
+            std::cout << "2)Vezi lista de start\n\n";
+            listaTurnee.get_lista()[i].afiseaza_lista_clasament();
 
             std::cout << "Selecteaza optiunea: ";
 
@@ -311,6 +342,10 @@ void Meniu::MeniuTurneu(Utilizator* utilizator,ListaTurnee& listaTurnee, unsigne
                         MeniuRunda(utilizator,listaTurnee,i,nrrunda-1);
                     }
                     break;
+                    case 2:{
+                        MeniuListaStart(utilizator,listaTurnee,i);
+                        break;
+                    }
                 }
                 default: {
                     MeniuTurneu(utilizator, listaTurnee, i);
@@ -374,14 +409,14 @@ void Meniu::MeniuRunda(Utilizator* utilizator,ListaTurnee& listaTurnee,unsigned 
         listaTurnee.get_lista()[i].get_listarunde()[j].afiseaza_runda();
 
         std::cout << "\n\nSelecteaza optiunea: ";
-        int optiune;
+        char optiune;
         std::cin >> optiune;
         switch (optiune) {
-            case 0: {
+            case '0': {
                 MeniuTurneu(utilizator, listaTurnee,i);
                 break;
             }
-            case 1: {
+            case '1': {
                 std::cout<<"Alegeti dintre: 1, 0, -1:\n1 -> 1-0\n0 -> 1/2-1/2\n-1 -> 0-1\nIntroduceti rezultatele:\n";
                 for(auto & aux : listaTurnee.get_lista()[i].get_listarunde()[j].get_partide())
                     if(aux.get_negru().get_nume()!="Bye" && aux.get_negru().get_prenume()!=" ")
@@ -423,13 +458,13 @@ void Meniu::MeniuRunda(Utilizator* utilizator,ListaTurnee& listaTurnee,unsigned 
 
         // Alte opțiuni specifice pentru administrator
     } else if (dynamic_cast<Guest *>(utilizator)) {
-        std::cout << "0)Inapoi\n\n";
+        std::cout << "0)\n\n";
 
-        //void afiseaza runda
+        listaTurnee.get_lista()[i].get_listarunde()[j].afiseaza_runda();
         std::cout<<"\n\nIntrodu 0 pentru a iesi: ";
-        int optiune;
+        char optiune;
         std::cin >> optiune;
-        if(optiune==0)
+        if(optiune=='0')
         {MeniuTurneu(utilizator, listaTurnee, i);}
         else
         {MeniuRunda(utilizator, listaTurnee, i,j);}
@@ -441,9 +476,9 @@ void Meniu::MeniuListaStart(Utilizator *utilizator, ListaTurnee &listaTurnee, un
     std::cout<<"Aceasta este lista de start:\n";
     listaTurnee.get_lista()[i].afiseaza_lista_jucatori();
     std::cout<<"\n\nIntroduceti 0 pentru a iesi din lista de start: ";
-    int optiune;
+    char optiune;
     std::cin>>optiune;
-    if(optiune==0)
+    if(optiune=='0')
         MeniuTurneu(utilizator, listaTurnee, i);
     else{std::cout<<"Tasta gresita! Incercati din nou!";
         MeniuListaStart(utilizator,listaTurnee,i);}
