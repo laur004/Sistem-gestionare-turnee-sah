@@ -14,8 +14,8 @@ int Jucator::get_rating() const{return rating;}
 void Jucator::set_rating(int nr){rating=nr;}
 [[nodiscard]] double Jucator::get_puncte() const{return puncte;}
 void Jucator::set_puncte(double x){puncte=x;}
-std::ostream &operator<<(std::ostream &out, Jucator& jucator){
-    out<<jucator.nume<<" "<<jucator.prenume<<" Rating: "<<jucator.rating<<"; Puncte: "<<jucator.puncte<<std::endl;
+std::ostream &operator<<(std::ostream &out,const Jucator& jucator){
+    out<<jucator.get_nume()<<" "<<jucator.get_prenume()<<" Rating: "<<jucator.get_rating()<<"; Puncte: "<<jucator.get_puncte()<<std::endl;
     return out;
 }
 std::istream &operator>>(std::istream &in,Jucator& jucator){
