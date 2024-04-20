@@ -2,6 +2,8 @@
 
 ## Cerințe obligatorii 
 
+
+
 Nerespectarea duce la nepunctarea proiectului
 
 - programul va fi scris în C++

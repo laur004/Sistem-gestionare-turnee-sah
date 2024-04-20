@@ -117,7 +117,25 @@ FetchContent_MakeAvailable(googletest)
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME} main.cpp ${SOURCES})
+add_executable(${PROJECT_NAME} main.cpp ${SOURCES}
+        include/Meniu.h
+        src/Meniu.cpp
+        include/Guest.h
+        src/Guest.cpp
+        include/Utilizator.h
+        include/Administrator.h
+        src/Administrator.cpp
+        include/Turneu.h
+        src/Turneu.cpp
+        include/Jucator.h
+        src/Jucator.cpp
+        include/ListaTurnee.h
+        src/ListaTurnee.cpp
+        include/Partida.h
+        src/Partida.cpp
+        include/Runda.h
+        src/Runda.cpp
+)
 
 ###############################################################################
 
@@ -174,6 +192,23 @@ add_executable(
         ${HEADERS}
         ${TESTS}
         ${SOURCES}
+        include/Meniu.h
+        src/Meniu.cpp
+        include/Guest.h
+        src/Guest.cpp
+        include/Utilizator.h
+        include/Administrator.h
+        src/Administrator.cpp
+        include/Turneu.h
+        src/Turneu.cpp
+        include/Jucator.h
+        src/Jucator.cpp
+        include/ListaTurnee.h
+        src/ListaTurnee.cpp
+        include/Partida.h
+        src/Partida.cpp
+        include/Runda.h
+        src/Runda.cpp
 )
 
 target_link_libraries(
