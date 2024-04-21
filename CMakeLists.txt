@@ -135,8 +135,6 @@ add_executable(${PROJECT_NAME} main.cpp ${SOURCES}
         src/Partida.cpp
         include/Runda.h
         src/Runda.cpp
-        test/example/testelistaturnee.cpp
-        test/example/testelistaturnee.cpp
 )
 
 ###############################################################################
@@ -211,8 +209,6 @@ add_executable(
         src/Partida.cpp
         include/Runda.h
         src/Runda.cpp
-        test/example/testelistaturnee.cpp
-        test/example/testelistaturnee.cpp
 )
 
 target_link_libraries(
