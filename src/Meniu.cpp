@@ -11,11 +11,11 @@ void Meniu::Login(ListaTurnee &listaTurnee) {
     try {
         int optiune;
         if (!(std::cin >> optiune)) {
-            throw std::runtime_error("Trebuie sa alegi ca optiune numere nu litere!"); // Throw an exception if input extraction fails
+            throw std::runtime_error("Trebuie sa alegi ca optiune numere nu litere!");
         }
 
         if (optiune != 0 && optiune != 1 && optiune != 2) {
-            throw std::runtime_error("Nu exista optiunea!"); // Throw an exception for invalid input
+            throw std::runtime_error("Nu exista optiunea!");
         }
 
         switch (optiune) {
@@ -44,14 +44,14 @@ void Meniu::Login(ListaTurnee &listaTurnee) {
             case 0: break;
 
             default: {
-                throw std::runtime_error("Nu exista optiunea!"); // Throw an exception for invalid input
+                throw std::runtime_error("Nu exista optiunea!");
             }
         }
     } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << std::endl;
-        std::cin.clear(); // Clear the error state
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Discard the invalid input
-        Login(listaTurnee); // Return to the login menu
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        Login(listaTurnee);
     }
 }
 
@@ -84,7 +84,7 @@ void Meniu::aMeniu(Utilizator* utilizator,ListaTurnee& listaTurnee){
                 aMeniu(utilizator,listaTurnee);
                 break;
             }
-            case 3:{Administrator::eliminareTurneu(listaTurnee);
+            case 3:{dynamic_cast<Administrator*>(utilizator)->eliminareTurneu(listaTurnee);
                 aMeniu(utilizator,listaTurnee);
                 break;}
             case 4:{listaTurnee.afisare_lista();
@@ -180,12 +180,12 @@ void Meniu::MeniuTurneu(Utilizator* utilizator,ListaTurnee& listaTurnee, unsigne
                     break;
                 }
                 case 1: {
-                    Administrator::adaugareJucator(listaTurnee.get_lista()[i]);
+                    dynamic_cast<Administrator*>(utilizator)->adaugareJucator(listaTurnee.get_lista()[i]);
                     MeniuTurneu(utilizator, listaTurnee, i);
                     break;
                 }
                 case 2: {
-                    Administrator::eliminareJucator(listaTurnee.get_lista()[i]);
+                    dynamic_cast<Administrator*>(utilizator)->eliminareJucator(listaTurnee.get_lista()[i]);
                     MeniuTurneu(utilizator, listaTurnee, i);
                     break;
                 }
@@ -203,22 +203,7 @@ void Meniu::MeniuTurneu(Utilizator* utilizator,ListaTurnee& listaTurnee, unsigne
                         else{ listaTurnee.get_lista()[i].StartTurneu();}
                     MeniuTurneu(utilizator, listaTurnee, i);
                     break;
-//                    if(listaTurnee.get_lista()[i].get_NrMaximJucatori()!=listaTurnee.get_lista()[i].get_NrJucatori())
-//                        std::cout<<"Nu se poate incepe turneul! Nu s-a intrunit numarul de jucatori!\n";
-//                    else{ Turneu* turneu_ptr = &listaTurnee.get_lista()[i];
-//                        auto* turneu_rapid_ptr = dynamic_cast<TurneuRapid*>(turneu_ptr);
-//                        if (turneu_rapid_ptr) {
-//                            turneu_rapid_ptr->StartTurneu();
-//                        }
-//                        else{
-//                            auto* turneu_clasic_ptr = dynamic_cast<TurneuClasic*>(turneu_ptr);
-//                            if (turneu_clasic_ptr) {
-//                                turneu_clasic_ptr->StartTurneu();
-//                            }
-//                        }
-//                    }
-//                    MeniuTurneu(utilizator, listaTurnee, i);
-//                    break;
+
                 }
                 default: {
                     std::cout << "Nu exista optiunea!";
