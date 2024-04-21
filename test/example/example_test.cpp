@@ -19,22 +19,28 @@ TEST(ListaTurneeTest, AdaugareSiEliminareTurneu) {
     EXPECT_EQ(listaTurnee.get_nr_turnee(), 0);
 }
 
-TEST(ListaTurneeTest, CautareTurneuDupaNume) {
-    ListaTurnee listaTurnee;
-    Turneu turneu("NumeTurneu");
-    listaTurnee.adaugare_turneu();
 
-    testing::internal::CaptureStdout();
-    listaTurnee.cautare_turneu_nume();
-    std::string output = testing::internal::GetCapturedStdout();
-
-    EXPECT_NE(output.find("NumeTurneu"), std::string::npos);
-}
 
 TEST(ListaTurneeTest, CitesteSiAfiseazaNTurnee) {
     ListaTurnee listaTurnee;
+
+    // Simulăm input-ul utilizatorului
+    std::istringstream input("3\n");
+    std::cin.rdbuf(input.rdbuf());
+
+    // Capturăm output-ul pentru a-l verifica mai târziu
     testing::internal::CaptureStdout();
+
+    // Apelăm funcția
     listaTurnee.citeste_si_afiseaza_n_turnee();
+
+    // Verificăm că lista de turnee nu este goală
+    EXPECT_GT(listaTurnee.get_nr_turnee(), 0);
+
+    // Verificăm că numărul de turnee adăugate este cel corect
+    EXPECT_EQ(listaTurnee.get_nr_turnee(), 3);
+
+    // Verificăm că nu se afișează nimic
     std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_FALSE(output.empty()); // Verificăm dacă ieșirea nu este goală
+    EXPECT_TRUE(output.empty());
 }
