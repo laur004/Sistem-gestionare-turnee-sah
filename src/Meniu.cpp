@@ -7,8 +7,9 @@
 void Meniu::Login(ListaTurnee &listaTurnee) {
     std::cout << "Bine ai venit!\nVrei sa continui ca 1) 'Guest' sau 2) 'Administrator'?\n\nVrei sa iesi? Tasteaza 0\nTasteaza alegerea: ";
 
-    int optiune;
+
     try {
+        int optiune;
         if (!(std::cin >> optiune)) {
             throw std::runtime_error("Trebuie sa alegi ca optiune numere nu litere!"); // Throw an exception if input extraction fails
         }
