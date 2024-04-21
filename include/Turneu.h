@@ -40,7 +40,7 @@ public:
     void afiseaza_lista_jucatori();
     void ordoneaza_dupa_puncte();
     void ordoneaza_dupa_rating();
-    void set_nume();
+    //void set_nume();
     [[nodiscard]] std::string get_nume() const;
     virtual void set_nrrunde();
     [[nodiscard]] int get_nrrunde()const;
