@@ -1,4 +1,14 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Sistem de gestionare a turneelor de sah
+
+
+Programul contine 2 tipuri de utilizatori: Admin si Guest.
+Guest-ul poate vedea toate turneele existente, poate trimite cereri de inscriere, poate vedea fiecare runda din turneu si poate vedea clasamentul.
+Admin-ul poate adauga turnee, poate adauga jucatori, poate vedea si accepta cereri de inscriere.
+Cand numarul de jucatori pentru turneu este atins, admin-ul poate apasa: StartTurneu ce va porni turneul si va genera toate rundele.
+Ulterior poate adauga rezultate fiecarei partide din fiecare runda, avand efect asupra rating-urilor jucatorilor si punctelor acestora, influentand clasamentul. 
+Turneele de sah din acest proiect sunt de tipul Round-Robin(toti jucatorii joaca intre ei).
+
+
 
 ## Cerințe obligatorii 
 
